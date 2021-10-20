@@ -186,7 +186,7 @@ def main():
 
 if __name__ == '__main__':
    # print(separate_fractionary_integer('15.01')) VERIFICA ASTA CAND POTI
-    test_show_numbers_in_letters()
+    #test_show_numbers_in_letters()
     test_descompunere_numar()
     test_integer_divides_fractionary()
     test_separate_fractionary_integer()
