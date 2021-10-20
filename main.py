@@ -45,6 +45,45 @@ def test_numbers_in_interval():
     assert numbers_in_interval([-4, 5], -4, 5) == []
     assert numbers_in_interval([], -4, 5) == []
 
+def separate_fractionary_integer(num_str):
+    '''
+    Functia separa partea intreaga si partea fractionara(NUMARUl nu e intreg) a unui numar trimis ca string
+    :param num_str: Un numar trimis ca string
+    :return: Partea intreaga si fractionara a unui numar, intr un tuple
+    '''
+    num_str_split = num_str.split('.')
+    integer = int(num_str_split[0])
+    fractionary = int(num_str_split[1])
+    return (integer, fractionary)
+
+def test_separate_fractionary_integer():
+    assert separate_fractionary_integer('1.5') == (1, 5)
+    assert separate_fractionary_integer('0.2') == (0, 2)
+    assert separate_fractionary_integer('-3.3') == (-3, 3)
+
+def integer_divides_fractionary(lst):
+    '''
+    Functia returneaza toate numerele din lista pentru care partea intreaga divide partea fractionara
+    :param lst: O lista de float
+    :return: O lista de numere cu proprietatea ca partea intreaga divide fractionara
+    '''
+    result = []
+    for num in lst:
+        if num != int(num):#nu e intreg
+            str_num = str(num)
+            thistuple = separate_fractionary_integer(str_num)
+            integer = thistuple[0]
+            fractionary = thistuple[1]
+            if fractionary % integer == 0:
+                result.append(num)
+    return result
+
+def test_integer_divides_fractionary():
+    assert integer_divides_fractionary([1.5, -3.3, 8, 9.8, 3.2]) == [1.5, -3.3]
+    assert integer_divides_fractionary([1, 2, 3]) == []
+    assert integer_divides_fractionary([1, -1.5, 2.3]) == [-1.5]
+    assert integer_divides_fractionary([]) == []
+
 def main():
     lst = []
     while True:
@@ -58,7 +97,7 @@ def main():
             dr = int(input('Introduceti capatul din dreapta al intervalului: '))
             print(numbers_in_interval(lst, st, dr))
         elif optiune == '4':
-            pass
+            print(integer_divides_fractionary(lst))
         elif optiune == '5':
            pass
         elif optiune == 'x':
@@ -68,6 +107,9 @@ def main():
 
 
 if __name__ == '__main__':
+   # print(separate_fractionary_integer('15.01')) VERIFICA ASTA CAND POTI
+    test_integer_divides_fractionary()
+    test_separate_fractionary_integer()
     test_numbers_in_interval()
     test_integer_list()
     main()
