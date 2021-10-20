@@ -84,6 +84,84 @@ def test_integer_divides_fractionary():
     assert integer_divides_fractionary([1, -1.5, 2.3]) == [-1.5]
     assert integer_divides_fractionary([]) == []
 
+def show_number_in_letters(number):
+    '''
+    Functia retunreaza un string cu numarul(care e cifra in str) scris in cuvinte
+    :param number: O cifra introdusa de utilizator
+    :return: Cifra scris in cuvinte
+    '''
+    if number == '1':
+        return 'unu'
+    if number =='2':
+        return 'doi'
+    if number =='3':
+        return 'trei'
+    if number =='4':
+        return 'patru'
+    if number =='5':
+        return 'cinci'
+    if number =='6':
+        return 'sase'
+    if number =='7':
+        return 'sapte'
+    if number =='8':
+        return 'opt'
+    if number =='9':
+        return 'noua'
+    if number =='0':
+        return 'zero'
+
+def descompunere_numar(num):
+    '''
+    Functia descompune un numar(trimis ca string) in litere
+    :param num: U numar de tip str
+    :return: Numarul in cifre
+    '''
+    lista = []
+    lista_string = []
+    for i in range(len(num)):
+        lista.append(num[i])
+    for index in range(len(lista)):
+        if lista[index] == '.':
+            lista_string.append('virgula')
+        elif lista[index] == '-':
+            lista_string.append('minus')
+        else:
+            lista_string.append(show_number_in_letters(lista[index]))
+    s = ""
+    for u in lista_string:
+        s = s + u
+    return s
+
+def test_descompunere_numar():
+    assert descompunere_numar('0.25') == 'zerovirguladoicinci'
+    assert descompunere_numar('0') == 'zero'
+    assert descompunere_numar('-0') == 'minuszero'
+    assert descompunere_numar('-0.1') == 'minuszerovirgulaunu'
+
+def show_numbers_in_letters(lst):
+    '''
+     Functia scrie toate numerele din lista doar cu cifre
+    :param lst: O lista de float
+    :return: Lista scrisa cu cifre
+    '''
+    lista_mea = []
+    n = len(lst)
+    for i in range(n):
+        if lst[i] != int(lst[i]):
+            lista_mea.append(str(lst[i]))
+        else:
+            lista_mea.append(str(int(lst[i])))
+    lista = []
+    for y in lista_mea:
+        lista.append(descompunere_numar(y))
+    return lista
+
+def test_show_numbers_in_letters():
+    assert show_number_in_letters([1.5, -3.3, 8, 9.8, 3.2, 14.52]) == ['unuvirgulacinci', 'minustreivirgulatrei', 'opt', 'nouavirgulaopt', 'treivirguladoi', 'unupatruvirgulacincidoi']
+    assert show_number_in_letters([1.5]) == ['unuvirgulacinci']
+    assert show_number_in_letters([]) == []
+
 def main():
     lst = []
     while True:
@@ -99,7 +177,7 @@ def main():
         elif optiune == '4':
             print(integer_divides_fractionary(lst))
         elif optiune == '5':
-           pass
+           print(show_number_in_letters(lst))
         elif optiune == 'x':
             break
         else:
@@ -108,6 +186,8 @@ def main():
 
 if __name__ == '__main__':
    # print(separate_fractionary_integer('15.01')) VERIFICA ASTA CAND POTI
+    test_show_numbers_in_letters()
+    test_descompunere_numar()
     test_integer_divides_fractionary()
     test_separate_fractionary_integer()
     test_numbers_in_interval()
